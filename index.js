@@ -18,7 +18,6 @@ function calculateSMA(data){
 
 function calculateEMA(data){
 	var multiplier = 0.1818;	
-	console.log("SMA: " +  calculateSMA(data));
 	var lastEMA;
 	var currentEMA;
 
@@ -49,34 +48,40 @@ function getEth(){
 			var average_price = retrievedData / i;
 			var current_price = data[0][4];
 
-			if(current_price < average_price - (average_price * 0.025) && !purchased && bankAccount > 0){
+			if(current_price < calculateEMA(data) && !purchased && bankAccount > 0){
 				ethHolding = bankAccount / current_price;
 				purchased = true;
 				bankAccount = 0;
 
 				console.log("bought");
-				console.log("Average Price: " + (average_price - (average_price * 0.025)).toString());
+				console.log("EMA: " + calculateEMA(data))
+				console.log("Current Price: " + current_price);
 				console.log("Ethereum Holding: " + ethHolding);
 				console.log("Bank Account: " + bankAccount);
+				console.log("");
 			}
 
-			else if(purchased && current_price > average_price){
+			else if(purchased && current_price > calculateEMA(data)){
 				money_made = ethHolding * current_price;
 				bankAccount += money_made;
 				purchased = false;
+				ethHolding = 0;
 
 				console.log("sold");
-				console.log("Average Price: " + (average_price - (average_price * 0.025)).toString());
+				console.log("EMA: " + calculateEMA(data))
+				console.log("Current Price: " + current_price);
 				console.log("Ethereum Holding: " + ethHolding);
 				console.log("Bank Account: " + bankAccount);
+				console.log("");
 			}
 
 		 	else {
-		 		console.log(calculateEMA(data));
 				console.log("not purchased");
-				console.log("Average Price: " + (average_price - (average_price * 0.025)).toString());
+				console.log("EMA: " + calculateEMA(data))
+				console.log("Current Price: " + current_price);
 				console.log("Ethereum Holding: " + ethHolding);
 				console.log("Bank Account: " + bankAccount);
+				console.log("");
 			}
 		}
 	})
