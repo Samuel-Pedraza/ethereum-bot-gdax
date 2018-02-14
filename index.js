@@ -17,7 +17,20 @@ function calculateSMA(data){
 }
 
 function calculateEMA(data){
-	console.log("SMA:" +  calculateSMA(data));
+	var multiplier = 0.1818;	
+	console.log("SMA: " +  calculateSMA(data));
+	var lastEMA;
+	var currentEMA;
+
+	for(var i = data.length - 11; i > 0; i--){
+		if(i == data.length - 11){
+			lastEMA = calculateSMA(data);
+		} else {
+			currentEMA = (data[i][4] - lastEMA) * (multiplier) + lastEMA;
+			lastEMA = currentEMA;
+		}
+	}
+	return currentEMA;
 }
 
 function getEth(){
@@ -59,7 +72,7 @@ function getEth(){
 			}
 
 		 	else {
-		 		calculateEMA(data);
+		 		console.log(calculateEMA(data));
 				console.log("not purchased");
 				console.log("Average Price: " + (average_price - (average_price * 0.025)).toString());
 				console.log("Ethereum Holding: " + ethHolding);
