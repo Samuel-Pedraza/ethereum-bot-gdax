@@ -4,6 +4,7 @@ var publicClient = new gdax.PublicClient();
 var bankAccount = 100;
 var purchased = false;
 var ethHolding = 0;
+var purchasedAtEMA = 0;
 
 function calculateSMA(data){
 	var holderSMA = 0;
@@ -52,7 +53,8 @@ function getEth(){
 				ethHolding = bankAccount / current_price;
 				purchased = true;
 				bankAccount = 0;
-
+				purchasedAtEMA = calculateEMA(data);
+				
 				console.log("bought");
 				console.log("EMA: " + calculateEMA(data))
 				console.log("Current Price: " + current_price);
@@ -61,7 +63,7 @@ function getEth(){
 				console.log("");
 			}
 
-			else if(purchased && current_price > calculateEMA(data)){
+			else if(purchased && current_price > purchasedAtEMA){
 				money_made = ethHolding * current_price;
 				bankAccount += money_made;
 				purchased = false;
