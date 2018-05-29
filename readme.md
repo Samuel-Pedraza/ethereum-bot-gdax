@@ -1,4 +1,4 @@
-# about
+# About
 <hr>
 This project involved me implementing EMA (exponential moving average), a formula that determines what is the
 average price, based on weighing the latest prices more heavily.
